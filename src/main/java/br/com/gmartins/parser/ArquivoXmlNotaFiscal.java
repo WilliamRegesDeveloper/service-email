@@ -6,14 +6,15 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 
 import br.com.gmartins.model.Emitente;
 import br.com.gmartins.repository.EmitenteRepository;
 
-public class ArquivoXmlNotaFiscal {
-
+@Service
+public class ArquivoXmlNotaFiscal {	
 	
 	@Autowired
     private EmitenteRepository repository;
@@ -21,8 +22,6 @@ public class ArquivoXmlNotaFiscal {
 	public void Salvar(String arquivoXml) {
 		
 		try {
-			
-
 			 DocumentBuilderFactory nfe =  DocumentBuilderFactory.newInstance(); 
 			 DocumentBuilder builder = nfe.newDocumentBuilder();
 			 Document document = builder.parse(new InputSource(new StringReader(arquivoXml))); 
@@ -38,15 +37,12 @@ public class ArquivoXmlNotaFiscal {
 			
 		   	 System.out.println(numNota +" "+ dataEmissao  +" "+ tipoNfe +""+ecnpjCpf);
 
-		   	 Emitente emitente = new Emitente(ecnpjCpf,numNota );
-		   	
-	
-		   	 //System.out.println(emitente);
-	          this.repository.save(emitente);
+		   	 Emitente emitente = new Emitente(ecnpjCpf,numNota );	
+	          repository.save(emitente);
 			
 		}catch (Exception e) {
 			e.printStackTrace();
-			}
+		}
 		
 	}
 

@@ -12,11 +12,17 @@ import javax.mail.Session;
 import javax.mail.Store;
 import javax.mail.search.FlagTerm;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import br.com.gmartins.config.ContaEmail;
 import br.com.gmartins.parser.ArquivoXmlNotaFiscal;
 
+@Service
 public class ReceberEmailComAnexoService  { 
     
+	@Autowired
+	private ArquivoXmlNotaFiscal xml;
 	
 	public void receberEmail(){
     
@@ -69,7 +75,7 @@ public class ReceberEmailComAnexoService  {
 	    			 Scanner scanner = new Scanner(bodyPart.getInputStream());
 	    			 	while (scanner.hasNextLine()) {
 	    			 		
-	    			 		ArquivoXmlNotaFiscal xml = new ArquivoXmlNotaFiscal();
+	    			 		//ArquivoXmlNotaFiscal xml = new ArquivoXmlNotaFiscal();
 	    			 		xml.Salvar(scanner.nextLine());
 	    			 	}
 	    			 scanner.close();	

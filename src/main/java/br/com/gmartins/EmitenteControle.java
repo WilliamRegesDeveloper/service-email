@@ -1,29 +1,22 @@
 package br.com.gmartins;
-
+import java.net.URI;
 import java.util.List;
 
-import org.junit.Test;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.gmartins.model.Emitente;
 import br.com.gmartins.repository.EmitenteRepository;
 
-
-
-public class EmitenteControle {
-	
-	@Autowired
-	private EmitenteRepository emitenteRepository;
-	
-	@Test
-    public void testRepository(){
-		
-		emitenteRepository.save(new Emitente("Maria Oliveira","123456789"));
-		
-		 final List<Emitente> todos = emitenteRepository.findAll();
-		 System.out.println(todos);
-/*@RestController
+@RestController
 @RequestMapping("/")
 public class EmitenteControle {
 	
@@ -44,9 +37,5 @@ public class EmitenteControle {
 		response.setHeader("Location", uri.toASCIIString());
 		
 		return ResponseEntity.created(uri).body(emitenteSalva);	
-	}*/
-	
 	}
-	
 }
-

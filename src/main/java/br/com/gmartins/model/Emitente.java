@@ -10,12 +10,12 @@ import javax.persistence.Table;
 
 
 @Entity
-@SequenceGenerator(name = "GEN_SEQ", sequenceName = "ARQUIVO_XML", initialValue = 0 , allocationSize = 1)
 @Table(name="ARQUIVOXML")
 public class Emitente {
 
 	@Id
 	@GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "GEN_SEQ")
+	@SequenceGenerator(name = "GEN_SEQ", sequenceName = "ARQUIVO_XML", allocationSize = 1)
 	@Column
 	private Long Id;
     
