@@ -75,7 +75,6 @@ public class ReceberEmailComAnexoService  {
 	    			 Scanner scanner = new Scanner(bodyPart.getInputStream());
 	    			 	while (scanner.hasNextLine()) {
 	    			 		
-	    			 		//ArquivoXmlNotaFiscal xml = new ArquivoXmlNotaFiscal();
 	    			 		xml.Salvar(scanner.nextLine());
 	    			 	}
 	    			 scanner.close();	
