@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="ARQUIVOXML")
-public class Emitente {
+public class EmitenteCopia {
 
 	@Id
 	@GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "GEN_SEQ")
@@ -25,10 +25,10 @@ public class Emitente {
 	@Column
 	private String nota;
 
-	public Emitente() {
+	public EmitenteCopia() {
 		
 	}
-	public Emitente(String emiCnpj, String nfe) {
+	public EmitenteCopia(String emiCnpj, String nfe) {
 		this.cnpj = emiCnpj;
 		this.nota = nfe;
 	}

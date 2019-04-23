@@ -1,14 +1,15 @@
 package br.com.gmartins.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 import javax.transaction.Transactional;
 
-import br.com.gmartins.model.Emitente;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import br.com.gmartins.model.NotaFiscalDetalhe;
 
 @Transactional
 @Repository
-public interface EmitenteRepository extends JpaRepository<Emitente, Long> {
+public interface NotaFiscalDetalheRepository extends JpaRepository<NotaFiscalDetalhe, Integer> {
 
 	
 }

@@ -12,14 +12,14 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
-import br.com.gmartins.model.Emitente;
-import br.com.gmartins.repository.EmitenteRepository;
+import br.com.gmartins.model.NotaFiscalMestre;
+import br.com.gmartins.repository.NotaFiscalMestreRepository;
 
 @Service
 public class ArquivoXmlNotaFiscal {	
 	
 	@Autowired
-    private EmitenteRepository repository;
+    private NotaFiscalMestreRepository repository;
 	
 	public void Salvar(String arquivoXml) {
 		
@@ -28,16 +28,15 @@ public class ArquivoXmlNotaFiscal {
 			 DocumentBuilder builder = nfe.newDocumentBuilder();
 			 Document document = builder.parse(new InputSource(new StringReader(arquivoXml))); 
 			 
-			 /*Identificação*/
-			 String numNota     = document.getElementsByTagName("nNF").item(0).getTextContent();
+			 /*********************************Identificação*******************************************/
+			 String notaFiscal  = document.getElementsByTagName("nNF").item(0).getTextContent();
 			 String chaveNfe    = document.getElementsByTagName("chNFe").item(0).getTextContent();
 			 String dataEmissao = document.getElementsByTagName("dhEmi").item(0).getTextContent();
 			 String tipoNfe     = document.getElementsByTagName("tpNF").item(0).getTextContent();
 			 
-			 System.out.println(String.format("%s %s %s %s", numNota, chaveNfe, dataEmissao, tipoNfe));
+			 System.out.println(String.format("%s %s %s %s", notaFiscal, chaveNfe, dataEmissao, tipoNfe));
 			 
-			 
-			 /*Emitente*/
+			 /************************************Emitente*********************************************/
 			 String emiCnpj       = document.getElementsByTagName("CNPJ").item(0).getTextContent();
 		     String emiRazao  	  = document.getElementsByTagName("xNome").item(0).getTextContent();
 		     String emiFantasia   = document.getElementsByTagName("xFant").item(0).getTextContent();
@@ -53,9 +52,8 @@ public class ArquivoXmlNotaFiscal {
 		     
 		     System.out.println(String.format("%s %s %s %s %s %s %s %s %s %s %s", emiCnpj, emiRazao, emiFantasia, emiEndereco, 
 		    		 emiNum , emiBairro , emiCodMun , emiMunicipio, emiUf , emiCep, emiFone, emiIe));
-		 /**********************************************************************************************************/
-		  
-		     /*Destinatário*/  
+		
+		     /*********************************Destinatário********************************************/
 			 String desCnpj       = document.getElementsByTagName("CNPJ").item(1).getTextContent();
 		     String desRazao  	  = document.getElementsByTagName("xNome").item(1).getTextContent();
 		     //String desFantasia   = document.getElementsByTagName("xFant").item(1).getTextContent();
@@ -72,12 +70,17 @@ public class ArquivoXmlNotaFiscal {
 		     
 		     System.out.println(String.format("%s %s %s %s %s %s %s %s %s %s %s", desCnpj, desRazao, desFantasia, desEndereco, 
 		    		 desNum , desBairro , desCodMun , desMunicipio, desUf , desCep, desFone, desIe));
-		     
-		 
-		   	  Emitente emitente = new Emitente(emiCnpj,numNota );	
-	          repository.save(emitente);
-	          
-	          /*Produtos*/
+				
+		     /********************************Pesistindo Objeto***************************************/    
+		     NotaFiscalMestre notaFiscalPai = new NotaFiscalMestre(notaFiscal, chaveNfe, dataEmissao, tipoNfe,  emiCnpj, emiRazao,  emiFantasia,  emiEndereco,  
+		    		 									emiNum,  emiBairro,  emiCodMun, emiMunicipio,  emiUf,  emiCep,  emiFone,  emiIe,  desCnpj,
+		    		 									desRazao,  desFantasia,  desEndereco,  desNum,  desBairro,  desCodMun,	desMunicipio,  
+		    		 									desUf,  desCep,  desFone,  desIe);
+		     //repository.save(notaFiscalPai);
+		  
+		      
+		   
+	          /*********************************Produtos**********************************************/
 	          NodeList produtos = document.getElementsByTagName("prod");
 	          for (int i = 0; i < produtos.getLength(); i++) {
 	          	Element produto = (Element) produtos.item(i);
@@ -85,13 +88,24 @@ public class ArquivoXmlNotaFiscal {
 	          	String codProduto    =  produto.getElementsByTagName("cProd").item(0).getTextContent();
 	  			String descProduto   =  produto.getElementsByTagName("xProd").item(0).getTextContent(); 
 	  			String unidMedida    =  produto.getElementsByTagName("uTrib").item(0).getTextContent();
-	  			double vlrUnitario   =  Double.parseDouble(produto.getElementsByTagName("vUnCom").item(0).getTextContent());
-	  			double qtdItem       =  Double.parseDouble(produto.getElementsByTagName("qCom").item(0).getTextContent());
-	  			double vlrTotProduto =  Double.parseDouble(produto.getElementsByTagName("vProd").item(0).getTextContent());
+	  			//double vlrUnitario   =  Double.parseDouble(produto.getElementsByTagName("vUnCom").item(0).getTextContent());
+	  			//double qtdItem       =  Double.parseDouble(produto.getElementsByTagName("qCom").item(0).getTextContent());
+	  			//double vlrTotProduto =  Double.parseDouble(produto.getElementsByTagName("vProd").item(0).getTextContent());
+	  			
+	  			String vlrUnitario   =  produto.getElementsByTagName("vUnCom").item(0).getTextContent();
+	  			String qtdItem       =  produto.getElementsByTagName("qCom").item(0).getTextContent();
+	  			String vlrTotProduto =  produto.getElementsByTagName("vProd").item(0).getTextContent();
 	  			
 	  		   System.out.println(String.format("%s %s %s %s %s %s", codProduto, descProduto, unidMedida, vlrUnitario, qtdItem , vlrTotProduto));
 	  		   
-	  		   //Produto p = new Produto(codProduto, descProduto, unidMedida, vlrUnitario, qtdItem, vlrTotProduto);
+	  		 
+	  		   
+	  		  // NotaFiscalFilho p = new NotaFiscalFilho(codProduto, descProduto, unidMedida, vlrUnitario,  qtdItem, vlrTotProduto);
+	  		   
+	  		  //notaFiscalPai.setItens(p);
+	  		   //notaFiscalPai.setProdutos(p);
+	  		   
+	  		    repository.save(notaFiscalPai);
 	          }
 	          
 	          /*Transportadora e quantidade de volumes*/
