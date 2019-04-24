@@ -1,6 +1,7 @@
 package br.com.gmartins.parser;
 
 import java.io.StringReader;
+import java.util.Arrays;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -12,14 +13,19 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
-import br.com.gmartins.model.NotaFiscalMestre;
-import br.com.gmartins.repository.NotaFiscalMestreRepository;
+import br.com.gmartins.model.NotaFiscalItens;
+import br.com.gmartins.model.NotaFiscal;
+import br.com.gmartins.repository.NotaFiscalItensRepository;
+import br.com.gmartins.repository.NotaFiscalRepository;
 
 @Service
 public class ArquivoXmlNotaFiscal {	
 	
 	@Autowired
-    private NotaFiscalMestreRepository repository;
+    private NotaFiscalRepository repNota;
+	@Autowired
+    private NotaFiscalItensRepository repNotaItens;
+	
 	
 	public void Salvar(String arquivoXml) {
 		
@@ -72,15 +78,13 @@ public class ArquivoXmlNotaFiscal {
 		    		 desNum , desBairro , desCodMun , desMunicipio, desUf , desCep, desFone, desIe));
 				
 		     /********************************Pesistindo Objeto***************************************/    
-		     NotaFiscalMestre notaFiscalPai = new NotaFiscalMestre(notaFiscal, chaveNfe, dataEmissao, tipoNfe,  emiCnpj, emiRazao,  emiFantasia,  emiEndereco,  
+		     
+		     NotaFiscal nota = new NotaFiscal(notaFiscal, chaveNfe, dataEmissao, tipoNfe,  emiCnpj, emiRazao,  emiFantasia,  emiEndereco,  
 		    		 									emiNum,  emiBairro,  emiCodMun, emiMunicipio,  emiUf,  emiCep,  emiFone,  emiIe,  desCnpj,
 		    		 									desRazao,  desFantasia,  desEndereco,  desNum,  desBairro,  desCodMun,	desMunicipio,  
 		    		 									desUf,  desCep,  desFone,  desIe);
-		     //repository.save(notaFiscalPai);
-		  
-		      
-		   
-	          /*********************************Produtos**********************************************/
+	          
+		     /*********************************Produtos**********************************************/
 	          NodeList produtos = document.getElementsByTagName("prod");
 	          for (int i = 0; i < produtos.getLength(); i++) {
 	          	Element produto = (Element) produtos.item(i);
@@ -96,16 +100,19 @@ public class ArquivoXmlNotaFiscal {
 	  			String qtdItem       =  produto.getElementsByTagName("qCom").item(0).getTextContent();
 	  			String vlrTotProduto =  produto.getElementsByTagName("vProd").item(0).getTextContent();
 	  			
-	  		   System.out.println(String.format("%s %s %s %s %s %s", codProduto, descProduto, unidMedida, vlrUnitario, qtdItem , vlrTotProduto));
+	  		    System.out.println(String.format("%s %s %s %s %s %s", codProduto, descProduto, unidMedida, vlrUnitario, qtdItem , vlrTotProduto));
 	  		   
+	  		    
+	  		    repNota.save(nota);
+	  		
+	  		  
+	  		    NotaFiscalItens itens = new NotaFiscalItens(codProduto, descProduto, unidMedida, vlrUnitario,  qtdItem, vlrTotProduto);
+	  		   
+	  		    nota.setNotaFiscalItens(Arrays.asList(itens));
+	  	
+	  		    repNotaItens.save(nota.getNotaFiscalItens());
+	  		     
 	  		 
-	  		   
-	  		  // NotaFiscalFilho p = new NotaFiscalFilho(codProduto, descProduto, unidMedida, vlrUnitario,  qtdItem, vlrTotProduto);
-	  		   
-	  		  //notaFiscalPai.setItens(p);
-	  		   //notaFiscalPai.setProdutos(p);
-	  		   
-	  		    repository.save(notaFiscalPai);
 	          }
 	          
 	          /*Transportadora e quantidade de volumes*/

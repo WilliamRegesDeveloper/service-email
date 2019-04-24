@@ -5,13 +5,12 @@ import javax.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import br.com.gmartins.model.NotaFiscalDetalhe;
+import br.com.gmartins.model.NotaFiscal;
 
 @Transactional
 @Repository
-public interface NotaFiscalDetalheRepository extends JpaRepository<NotaFiscalDetalhe, Integer> {
+public interface NotaFiscalRepository extends JpaRepository<NotaFiscal, Integer> {
 
-	
 }
 
 

@@ -10,8 +10,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="NotaEntradaClienteFilho")
-public class NotaFiscalDetalhe {
+@Table(name="NOTAFISCALITENS")
+public class NotaFiscalItens {
 
 	@Id
 	@GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "GEN_SEQ")
@@ -37,16 +37,17 @@ public class NotaFiscalDetalhe {
 	@Column 
 	private String vlrTotProduto;
 	
+	
 	@ManyToOne
-	private NotaFiscalMestre idMestre;
+	private NotaFiscal id_nota;
 	
 	/****************Produtos da Nota Fiscal********************/
 	
-	public NotaFiscalDetalhe() {
+	public NotaFiscalItens() {
 		
 	}
 
-	public NotaFiscalDetalhe(String codProduto, String descProduto, String unidMedida, String vlrUnitario, String qtdItem,
+	public NotaFiscalItens(String codProduto, String descProduto, String unidMedida, String vlrUnitario, String qtdItem,
 			String vlrTotProduto) {
 		this.codProduto = codProduto;
 		this.descProduto = descProduto;
@@ -112,14 +113,12 @@ public class NotaFiscalDetalhe {
 		Id = id;
 	}
 
-	public NotaFiscalMestre getNotaFiscalMestre() {
-		return idMestre;
+	public NotaFiscal getNotaFiscal() {
+		return id_nota;
 	}
 
-	public void setNotaFiscalMestre(NotaFiscalMestre notaFiscalMestre) {
-		this.idMestre = notaFiscalMestre;
+	public void setNotaFiscal(NotaFiscal notaFiscal) {
+		this.id_nota = notaFiscal;
 	}
-
-
 	
 }

@@ -2,8 +2,10 @@ package br.com.gmartins.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,8 +14,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="NotaEntradaCliente")
-public class NotaFiscalMestre {
+@Table(name="NOTAFISCAL")
+public class NotaFiscal {
 
 	@Id
 	@GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "GEN_SEQ")
@@ -109,14 +111,14 @@ public class NotaFiscalMestre {
 	@Column
 	private String desIe;
 	
-	@OneToMany(mappedBy = "idMestre")
-	private List<NotaFiscalDetalhe> notaFiscalDetalhe;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "id_nota", fetch = FetchType.LAZY)
+	private List<NotaFiscalItens> itensNota;
 		
-	public NotaFiscalMestre() {
+	public NotaFiscal() {
 		
 	}
 	
-	public NotaFiscalMestre(String notaFiscal, String chaveNfe, String dataEmissao, String tipoNfe, String emiCnpj,
+	public NotaFiscal(String notaFiscal, String chaveNfe, String dataEmissao, String tipoNfe, String emiCnpj,
 			String emiRazao, String emiFantasia, String emiEndereco, String emiNum, String emiBairro, String emiCodMun,
 			String emiMunicipio, String emiUf, String emiCep, String emiFone, String emiIe, String desCnpj,
 			String desRazao, String desFantasia, String desEndereco, String desNum, String desBairro, String desCodMun,
@@ -383,12 +385,18 @@ public class NotaFiscalMestre {
 		Id = id;
 	}
 
-	public List<NotaFiscalDetalhe> getNotaFiscalDetalhe() {
-		return notaFiscalDetalhe;
+	public List<NotaFiscalItens> getNotaFiscalItens() {
+		return itensNota;
 	}
 
-	public void setNotaFiscalDetalhe(List<NotaFiscalDetalhe> notaFiscalDetalhe) {
-		this.notaFiscalDetalhe = notaFiscalDetalhe;
+	public void setNotaFiscalItens(List<NotaFiscalItens> notaFiscalItens) {
+		this.itensNota = notaFiscalItens;
+		
+		for(NotaFiscalItens detalhe : notaFiscalItens){
+			detalhe.setNotaFiscal(this);
+		}
 	}
+	
+	
 	
 }
