@@ -15,11 +15,13 @@ public class ContaEmail{
 	}
 
 	public String getUserName() {
-		return "informatica@gmartinslogistica.com.br";
+		//return "informatica@gmartinslogistica.com.br";
+		return "nfe@gmartinslogistica.com.br";
 	}
 
 	public String getPassword() {
-		return "informatica10";
+		//return "informatica10";
+		return "nfegmlt2017";
 	}
 	
 	public boolean getStarttls() {

@@ -38,8 +38,8 @@ public class ArquivoXmlNotaFiscal {
 			 DocumentBuilderFactory nfe =  DocumentBuilderFactory.newInstance(); 
 			 DocumentBuilder builder = nfe.newDocumentBuilder();
 			 Document document = builder.parse(new InputSource(new StringReader(arquivoXml))); 
-			 
-			 
+			 document.getDocumentElement().normalize(); //novo
+			 			 
 			 
 			 /***Validação pela Chave de Acesso***/
 			 String chaveNfe    = document.getElementsByTagName("chNFe").item(0).getTextContent();
@@ -55,16 +55,13 @@ public class ArquivoXmlNotaFiscal {
 			 String dataEmissao = document.getElementsByTagName("dhEmi").item(0).getTextContent();
 			 String tipoNfe     = document.getElementsByTagName("tpNF").item(0).getTextContent();
 		     double valorTotalNota  = Double.parseDouble((document.getElementsByTagName("vNF").item(0).getTextContent()));
-		   
-		    
-		    
-			 
+		   			 
 			 /***Emitente***/
 			 String emiCnpj       = document.getElementsByTagName("CNPJ").item(0).getTextContent();
 		     String emiRazao  	  = document.getElementsByTagName("xNome").item(0).getTextContent().toUpperCase();
 		     String emiFantasia   = document.getElementsByTagName("xFant").item(0).getTextContent().toUpperCase();
 		     String emiEndereco   = document.getElementsByTagName("xLgr").item(0).getTextContent().toUpperCase();
-		     String emiNum  	  = document.getElementsByTagName("nro").item(0).getTextContent();
+		     String emiNum  	  = document.getElementsByTagName("nro").item(0).getTextContent().toUpperCase();
 		     String emiBairro  	  = document.getElementsByTagName("xBairro").item(0).getTextContent().toUpperCase();
 		     String emiCodMun  	  = document.getElementsByTagName("cMun").item(0).getTextContent();
 		     String emiMunicipio  = document.getElementsByTagName("xMun").item(0).getTextContent().toUpperCase();
@@ -78,13 +75,13 @@ public class ArquivoXmlNotaFiscal {
 		     String desRazao  	  = document.getElementsByTagName("xNome").item(1).getTextContent().toUpperCase();
 		     String desFantasia   = "*****";//document.getElementsByTagName("xFant").item(1).getTextContent();
 		     String desEndereco   = document.getElementsByTagName("xLgr").item(1).getTextContent().toUpperCase();
-		     String desNum  	  = document.getElementsByTagName("nro").item(1).getTextContent();
+		     String desNum  	  = document.getElementsByTagName("nro").item(1).getTextContent().toUpperCase();
 		     String desBairro  	  = document.getElementsByTagName("xBairro").item(1).getTextContent().toUpperCase();
 		     String desCodMun  	  = document.getElementsByTagName("cMun").item(1).getTextContent();
 		     String desMunicipio  = document.getElementsByTagName("xMun").item(1).getTextContent().toUpperCase();
 		     String desUf	  	  = document.getElementsByTagName("UF").item(1).getTextContent();
 		     String desCep 		  = document.getElementsByTagName("CEP").item(1).getTextContent();
-		     String desFone  	  = document.getElementsByTagName("fone").item(1).getTextContent();
+		     String desFone  	  = "*";//document.getElementsByTagName("fone").item(1).getTextContent();
 		     String desIe  		  = document.getElementsByTagName("IE").item(1).getTextContent();
 		      
 		     /***Instância da Classe Nota Fiscal***/   

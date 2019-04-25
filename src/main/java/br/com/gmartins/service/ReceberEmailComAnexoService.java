@@ -70,9 +70,12 @@ public class ReceberEmailComAnexoService  {
 	    			
 	    			if( bodyPart.isMimeType("text/xml") || 
 	    				 bodyPart.isMimeType("multipart/mixed") ||
-	    				 	bodyPart.isMimeType("application/xml")){
+	    				 	bodyPart.isMimeType("application/xml") ||
+	    				 	bodyPart.getContentType().startsWith("application/xml") ||
+	    				 	bodyPart.getContentType().startsWith("application/octet-stream")
+	    					){
 	    			 	
-	    			 Scanner scanner = new Scanner(bodyPart.getInputStream());
+	    			 Scanner scanner = new Scanner(bodyPart.getInputStream(),"UTF-8");
 	    			 	while (scanner.hasNextLine()) {
 	    			 		
 	    			 		xml.Salvar(scanner.nextLine());

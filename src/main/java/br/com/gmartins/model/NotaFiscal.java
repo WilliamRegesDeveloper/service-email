@@ -44,22 +44,22 @@ public class NotaFiscal {
 	@Column(nullable = false, length = 60)
 	private String emiRazao;
 	
-	@Column(length = 20)
+	@Column(length = 60)
 	private String emiFantasia;
 	
 	@Column(length = 60)
 	private String emiEndereco;
 	
-	@Column(length = 6)
+	@Column(length = 60)
 	private String emiNum;
 	
-	@Column(length = 30)
+	@Column(length = 60)
 	private String emiBairro;
 	
 	@Column(length = 10)
 	private String emiCodMun;
 	
-	@Column(length = 20)
+	@Column(length = 60)
 	private String emiMunicipio;
 	
 	@Column(length = 2)
@@ -81,22 +81,22 @@ public class NotaFiscal {
 	@Column(nullable = false, length = 60)
 	private String desRazao;
 	
-	@Column(length = 20)
+	@Column(length = 60)
 	private String desFantasia;
 	
 	@Column(length = 60)
 	private String desEndereco;
 	
-	@Column(length = 6)
+	@Column(length = 60)
 	private String desNum;
 	
-	@Column(length = 30)
+	@Column(length = 60)
 	private String desBairro;
 	
 	@Column(length = 10)
 	private String desCodMun;
 	
-	@Column(length = 20)
+	@Column(length = 60)
 	private String desMunicipio;
 	
 	@Column(length = 2)
