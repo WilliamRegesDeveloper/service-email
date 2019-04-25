@@ -10,14 +10,14 @@ import br.com.gmartins.service.ReceberEmailComAnexoService;
 @Component
 public class Sincronizador {
  
-	public static final long TEMPO = (100 * 60);
+	public static final long TEMPO = (100 * 60); // Tempo de Execução
     
 	@Autowired
 	private ReceberEmailComAnexoService arquivo;
 	
 	public void tempo() {
         
-		System.out.println("Inicio...");
+		System.out.println("<Inicio do Sincronizador>");
         
         Timer timer = null;
          
@@ -29,7 +29,7 @@ public class Sincronizador {
             
             	@Override
     			public void run() {
-    				System.out.println("Serviço em Operação...");
+    				System.out.println("<Serviço em Operação>");
     					arquivo.receberEmail();
     			}
     		};

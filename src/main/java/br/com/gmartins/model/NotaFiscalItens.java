@@ -15,7 +15,7 @@ public class NotaFiscalItens {
 
 	@Id
 	@GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "GEN_SEQ")
-	@SequenceGenerator(name = "GEN_SEQ", sequenceName = "SEQNOTAENTRADACLIENTEFILHO", allocationSize = 1)
+	@SequenceGenerator(name = "GEN_SEQ", sequenceName = "SEQNOTAFISCALITENS", allocationSize = 1)
 	@Column
 	private Integer Id;
 		
@@ -29,32 +29,29 @@ public class NotaFiscalItens {
 	private String unidMedida;
 	
 	@Column 
-	private String vlrUnitario;
+	private double vlrUnitario;
 	
 	@Column 
-	private String qtdItem;
+	private double qtdItem;
 	
 	@Column 
-	private String vlrTotProduto;
-	
+	private double vlrTotProduto;
 	
 	@ManyToOne
 	private NotaFiscal id_nota;
 	
-	/****************Produtos da Nota Fiscal********************/
 	
 	public NotaFiscalItens() {
 		
 	}
 
-	public NotaFiscalItens(String codProduto, String descProduto, String unidMedida, String vlrUnitario, String qtdItem,
-			String vlrTotProduto) {
-		this.codProduto = codProduto;
-		this.descProduto = descProduto;
-		this.unidMedida = unidMedida;
-		this.vlrUnitario = vlrUnitario;
-		this.qtdItem = qtdItem;
-		this.vlrTotProduto = vlrTotProduto;
+	public NotaFiscalItens(String codProduto, String descProduto, String unidMedida, double vlrUnitario, double qtdItem, double vlrTotProduto) {
+			this.codProduto = codProduto;
+			this.descProduto = descProduto;
+			this.unidMedida = unidMedida;
+			this.vlrUnitario = vlrUnitario;
+			this.qtdItem = qtdItem;
+			this.vlrTotProduto = vlrTotProduto;
 	}
 
 	public String getCodProduto() {
@@ -81,27 +78,27 @@ public class NotaFiscalItens {
 		this.unidMedida = unidMedida;
 	}
 
-	public String getVlrUnitario() {
+	public double getVlrUnitario() {
 		return vlrUnitario;
 	}
 
-	public void setVlrUnitario(String vlrUnitario) {
+	public void setVlrUnitario(double vlrUnitario) {
 		this.vlrUnitario = vlrUnitario;
 	}
 
-	public String getQtdItem() {
+	public double getQtdItem() {
 		return qtdItem;
 	}
 
-	public void setQtdItem(String qtdItem) {
+	public void setQtdItem(double qtdItem) {
 		this.qtdItem = qtdItem;
 	}
 
-	public String getVlrTotProduto() {
+	public double getVlrTotProduto() {
 		return vlrTotProduto;
 	}
 
-	public void setVlrTotProduto(String vlrTotProduto) {
+	public void setVlrTotProduto(double vlrTotProduto) {
 		this.vlrTotProduto = vlrTotProduto;
 	}
 

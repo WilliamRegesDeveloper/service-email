@@ -19,101 +19,116 @@ public class NotaFiscal {
 
 	@Id
 	@GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "GEN_SEQ")
-	@SequenceGenerator(name = "GEN_SEQ", sequenceName = "SEQNOTAENTRADACLIENTE", allocationSize = 1)
+	@SequenceGenerator(name = "GEN_SEQ", sequenceName = "SEQNOTAFISCAL", allocationSize = 1)
 	@Column
 	private Integer Id;
     
-	/****************Informaçãos da Nota Fiscal********************/
-	@Column
+	/***Informaçãos da Nota Fiscal***/
+	
+	@Column(nullable = false, length=20)
 	private String notaFiscal;
 	
-	@Column 
+	@Column(nullable = false, length=44) 
 	private String chaveNfe;
 	
-	@Column 
+	@Column (nullable = false, length=25)
 	private String dataEmissao;
 	
-	@Column 
+	@Column(length=1) 
 	private String tipoNfe;
 	
-	
-	/*************************Emitente*****************************/
-	@Column
+	/***Emitente***/
+	@Column(nullable = false , length = 18)
 	private String emiCnpj;
 	
-	@Column
+	@Column(nullable = false, length = 60)
 	private String emiRazao;
 	
-	@Column
+	@Column(length = 20)
 	private String emiFantasia;
 	
-	@Column
+	@Column(length = 60)
 	private String emiEndereco;
 	
-	@Column
+	@Column(length = 6)
 	private String emiNum;
 	
-	@Column
+	@Column(length = 30)
 	private String emiBairro;
 	
-	@Column
+	@Column(length = 10)
 	private String emiCodMun;
 	
-	@Column
+	@Column(length = 20)
 	private String emiMunicipio;
 	
-	@Column
+	@Column(length = 2)
 	private String emiUf;
 	
-	@Column
+	@Column(length = 8)
 	private String emiCep;
 	
-	@Column
+	@Column(length = 20)
 	private String emiFone;
 	
-	@Column
+	@Column(length = 18)
 	private String emiIe;
 	
-	/***************************Destinatário*****************************/
-	@Column
+	/***Destinatário****/
+	@Column(nullable = false , length = 18)
 	private String desCnpj;
 	
-	@Column
+	@Column(nullable = false, length = 60)
 	private String desRazao;
 	
-	@Column
+	@Column(length = 20)
 	private String desFantasia;
 	
-	@Column
+	@Column(length = 60)
 	private String desEndereco;
 	
-	@Column
+	@Column(length = 6)
 	private String desNum;
 	
-	@Column
+	@Column(length = 30)
 	private String desBairro;
 	
-	@Column
+	@Column(length = 10)
 	private String desCodMun;
 	
-	@Column
+	@Column(length = 20)
 	private String desMunicipio;
 	
-	@Column
+	@Column(length = 2)
 	private String desUf;
 	
-	@Column
+	@Column(length = 8)
 	private String desCep;
 	
-	@Column
+	@Column(length = 20)
 	private String desFone;
 	
-	@Column
+	@Column(length = 18)
 	private String desIe;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "id_nota", fetch = FetchType.LAZY)
 	private List<NotaFiscalItens> itensNota;
-		
+	
+	@Column(precision = 12, scale = 2)
+	private double valorTotalNota;
+	
+	@Column(precision = 12, scale = 2)
+	private double quantidadeVolumes;
+	
+	@Column(precision = 16, scale = 2)
+	private double quantidadeItens;
+	
+	@Column(precision = 18, scale = 2)
+	private double pesoLiquido;
+	
+	@Column(precision = 18, scale = 2)
+	private double pesoBruto;
+	
 	public NotaFiscal() {
 		
 	}
@@ -122,7 +137,8 @@ public class NotaFiscal {
 			String emiRazao, String emiFantasia, String emiEndereco, String emiNum, String emiBairro, String emiCodMun,
 			String emiMunicipio, String emiUf, String emiCep, String emiFone, String emiIe, String desCnpj,
 			String desRazao, String desFantasia, String desEndereco, String desNum, String desBairro, String desCodMun,
-			String desMunicipio, String desUf, String desCep, String desFone, String desIe) {
+			String desMunicipio, String desUf, String desCep, String desFone, String desIe,
+			double valorTotalNota) {
 		this.notaFiscal = notaFiscal;
 		this.chaveNfe = chaveNfe;
 		this.dataEmissao = dataEmissao;
@@ -151,6 +167,7 @@ public class NotaFiscal {
 		this.desCep = desCep;
 		this.desFone = desFone;
 		this.desIe = desIe;
+	    this.valorTotalNota =  valorTotalNota;
 	}
 
 	public String getNotaFiscal() {
@@ -388,7 +405,8 @@ public class NotaFiscal {
 	public List<NotaFiscalItens> getNotaFiscalItens() {
 		return itensNota;
 	}
-
+	
+	/*Set no ID em todos os itens da lista */
 	public void setNotaFiscalItens(List<NotaFiscalItens> notaFiscalItens) {
 		this.itensNota = notaFiscalItens;
 		
@@ -396,7 +414,45 @@ public class NotaFiscal {
 			detalhe.setNotaFiscal(this);
 		}
 	}
-	
-	
+
+	public double getValorTotalNota() {
+		return valorTotalNota;
+	}
+
+	public void setValorTotalNota(double valorTotalNota) {
+		this.valorTotalNota = valorTotalNota;
+	}
+
+	public double getQuantidadeVolumes() {
+		return quantidadeVolumes;
+	}
+
+	public void setQuantidadeVolumes(double quantidadeVolumes) {
+		this.quantidadeVolumes = quantidadeVolumes;
+	}
+
+	public double getQuantidadeItens() {
+		return quantidadeItens;
+	}
+
+	public void setQuantidadeItens(double quantidadeItens) {
+		this.quantidadeItens = quantidadeItens;
+	}
+
+	public double getPesoLiquido() {
+		return pesoLiquido;
+	}
+
+	public void setPesoLiquido(double pesoLiquido) {
+		this.pesoLiquido = pesoLiquido;
+	}
+
+	public double getPesoBruto() {
+		return pesoBruto;
+	}
+
+	public void setPesoBruto(double pesoBruto) {
+		this.pesoBruto = pesoBruto;
+	}
 	
 }
